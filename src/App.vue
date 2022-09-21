@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <VirtualList :listData="data" :estimatedItemSize="100" v-slot="slotProps">
+    <Item :item="slotProps.item" />
+  </VirtualList>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import VirtualList from './components/VirtualList.vue'
+import Item from './components/Item.vue'
+
+import faker from 'faker';
+
+let data = [];
+for (let id = 0; id < 1000; id++) {
+  data.push({
+    id,
+    value: faker.lorem.sentences() // 长文本
+  })
+}
 
 export default {
-  name: 'App',
+  name: 'app',
+  data(){
+    return {
+      data
+    };
+  },
   components: {
-    HelloWorld
+    VirtualList,
+    Item
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html{
+  height: 100%;
 }
+body{
+  height: 100%;
+  margin:0;
+}
+#app{
+  height:100%;
+}
+
 </style>
